@@ -1,8 +1,13 @@
 import 'package:augment/constants/colors.dart';
+import 'package:augment/controllers/auth_controller.dart';
+import 'package:augment/controllers/user_controller.dart';
 import 'package:augment/views/edit-profile.dart';
+import 'package:augment/views/splash_screen.dart';
 import 'package:augment/widgets/profile-textfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +21,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  var controller = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,16 +54,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w600,
                         color: lightswhiteColor),
                   ),
-                  Container(
-                      padding: EdgeInsets.all(13.r),
-                      width: 47.w,
-                      height: 47.h,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: lightswhiteColor),
-                      child: SvgIcon(
-                        "assets/icons/Logout-icon.svg",
-                        color: darkRedColor,
-                      )),
+                  GestureDetector(
+                    onTap: () {
+                      FirebaseAuth.instance.signOut();
+                      Get.offAll(() => SplashScreen());
+                    },
+                    child: Container(
+                        padding: EdgeInsets.all(13.r),
+                        width: 47.w,
+                        height: 47.h,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: lightswhiteColor),
+                        child: SvgIcon(
+                          "assets/icons/Logout-icon.svg",
+                          color: darkRedColor,
+                        )),
+                  ),
                 ],
               ),
             ),
@@ -84,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Ira Membrit",
+                            controller.user["name"],
                             style: GoogleFonts.montserrat(
                                 fontSize: 20.r,
                                 fontWeight: FontWeight.w600,
@@ -123,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       ProfileCustomText(
-                        text: "franline12@gmail.com",
+                        text: controller.user["email"],
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -138,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                      ProfileCustomText(text: "+3265615365"),
+                      ProfileCustomText(text: controller.user["phoneNumber"]),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
                         child: Align(
@@ -152,7 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                      ProfileCustomText(text: "Chak Shahzad Town "),
+                      ProfileCustomText(text: controller.user["location"]),
                       Divider(),
                       SizedBox(
                         height: 8.h,

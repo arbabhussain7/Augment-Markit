@@ -1,4 +1,5 @@
 import 'package:augment/constants/colors.dart';
+import 'package:augment/controllers/user_controller.dart';
 
 import 'package:augment/views/specific_prod_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,14 @@ import 'package:svg_icon/svg_icon.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var controller = Get.find<UserController>();
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Hey, Emily!",
+                    "Hey, ${controller.user['name']}",
                     style: GoogleFonts.montserrat(
                         fontSize: 24.sp,
                         fontWeight: FontWeight.w600,

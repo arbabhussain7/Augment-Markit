@@ -1,8 +1,10 @@
 import 'package:augment/constants/colors.dart';
+import 'package:augment/controllers/user_controller.dart';
 import 'package:augment/widgets/custom_button.dart';
 import 'package:augment/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,10 +18,8 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  final namecontroller = TextEditingController();
-  final emailcontroller = TextEditingController();
-  final phonecontroller = TextEditingController();
-  final locationcontroller = TextEditingController();
+  var controller = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,9 +100,9 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     CustomTextfield(
                       suffixIcons: null,
-                      inputType: TextInputType.emailAddress,
-                      controller: namecontroller,
-                      hinttext: "Ira Membrit",
+                      inputType: TextInputType.text,
+                      controller: controller.usernameController,
+                      hinttext: controller.user["name"],
                     ),
                     SizedBox(
                       height: 12.h,
@@ -118,10 +118,11 @@ class _EditProfileState extends State<EditProfile> {
                       height: 8.h,
                     ),
                     CustomTextfield(
+                      readOnly: true,
                       suffixIcons: null,
                       inputType: TextInputType.emailAddress,
-                      controller: emailcontroller,
-                      hinttext: "Fleacttech@gmail.com",
+                      controller: controller.emailController,
+                      hinttext: controller.user["email"],
                     ),
                     SizedBox(
                       height: 12.h,
@@ -139,8 +140,8 @@ class _EditProfileState extends State<EditProfile> {
                     CustomTextfield(
                       suffixIcons: null,
                       inputType: TextInputType.emailAddress,
-                      controller: phonecontroller,
-                      hinttext: "+3265615365",
+                      controller: controller.phoneNumberController,
+                      hinttext: controller.user["phoneNumber"],
                     ),
                     SizedBox(
                       height: 12.h,
@@ -158,13 +159,19 @@ class _EditProfileState extends State<EditProfile> {
                     CustomTextfield(
                       suffixIcons: null,
                       inputType: TextInputType.emailAddress,
-                      controller: locationcontroller,
-                      hinttext: "Chak Shahzad Town ",
+                      controller: controller.locationController,
+                      hinttext: controller.user["location"],
                     ),
                     SizedBox(
                       height: 132.h,
                     ),
-                    CustomButton(texts: "Update", onPressed: () {})
+                    Obx(() => controller.isLoading.value
+                        ? Center(child: CircularProgressIndicator())
+                        : CustomButton(
+                            texts: "Update",
+                            onPressed: () {
+                              controller.updateUser();
+                            }))
                   ],
                 ),
               ),

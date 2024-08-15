@@ -15,11 +15,13 @@ class CustomTextfield extends StatefulWidget {
     this.secureText = false,
     this.inputType = TextInputType.text,
     this.validator,
+    this.readOnly = false,
   });
 
   final TextEditingController controller;
   IconData? suffixIcons;
   final String hinttext;
+  final bool readOnly;
   bool isPassword;
   bool secureText;
   bool obscureText;
@@ -34,6 +36,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: widget.readOnly,
       style: GoogleFonts.montserrat(
           fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xff0A1828)),
       controller: widget.controller,

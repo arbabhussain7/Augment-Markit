@@ -1,7 +1,7 @@
+import 'package:augment/controllers/auth_controller.dart';
 import 'package:augment/views/authentication/change_password.dart';
 import 'package:augment/views/authentication/signup_screen.dart';
 import 'package:augment/constants/colors.dart';
-import 'package:augment/views/navigation/bottom_navbar.dart';
 import 'package:augment/widgets/custom_button.dart';
 import 'package:augment/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +17,9 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final namecontroller = TextEditingController();
-  final emailcontroller = TextEditingController();
+  // final emailcontroller = TextEditingController();
+  // final passwordcontroller = TextEditingController();
+  var controller = Get.put(AuthController());
   GlobalKey<FormState> key = GlobalKey();
   bool? isChecked = false;
   @override
@@ -72,7 +73,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     CustomTextfield(
                       suffixIcons: null,
                       inputType: TextInputType.emailAddress,
-                      controller: namecontroller,
+                      controller: controller.emailController,
                       hinttext: "Fleacttech@gmail.com",
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -97,7 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       height: 8.h,
                     ),
                     CustomTextfield(
-                        controller: emailcontroller,
+                        controller: controller.passwordController,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Please Enter Your Password ";
@@ -148,12 +149,17 @@ class _SignInScreenState extends State<SignInScreen> {
                     SizedBox(
                       height: 25.h,
                     ),
-                    CustomButton(
-                      onPressed: () {
-                        Get.to(() => BottomNavBar());
-                        if (key.currentState!.validate()) {}
-                      },
-                      texts: "Login",
+                    Obx(
+                      () => controller.isLoading.value
+                          ? Center(child: CircularProgressIndicator())
+                          : CustomButton(
+                              onPressed: () {
+                                if (key.currentState!.validate()) {
+                                  controller.login();
+                                }
+                              },
+                              texts: "Login",
+                            ),
                     ),
                     SizedBox(
                       height: 32.h,

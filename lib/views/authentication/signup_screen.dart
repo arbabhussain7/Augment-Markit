@@ -1,5 +1,6 @@
 // import 'package:augment/views/authentication/signin_screen.dart';
 import 'package:augment/constants/colors.dart';
+import 'package:augment/controllers/auth_controller.dart';
 import 'package:augment/widgets/custom_button.dart';
 import 'package:augment/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +16,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final namecontroller = TextEditingController();
-  final emailcontroller = TextEditingController();
-  final numbercontroller = TextEditingController();
-  final passwordcontroller = TextEditingController();
-  final confirmpasswordcontroller = TextEditingController();
   final GlobalKey<FormState> key = GlobalKey();
+  var controller = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: 10.h,
                     ),
                     CustomTextfield(
-                      controller: namecontroller,
+                      controller: controller.nameController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Enter Username ";
@@ -113,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: 10.h,
                     ),
                     CustomTextfield(
-                      controller: emailcontroller,
+                      controller: controller.emailController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return " Enter your email";
@@ -138,7 +135,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: 10.h,
                     ),
                     CustomTextfield(
-                        controller: numbercontroller,
+                        controller: controller.numberController,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return null;
@@ -163,7 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: 10.h,
                     ),
                     CustomTextfield(
-                        controller: passwordcontroller,
+                        controller: controller.passwordController,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Enter your password";
@@ -189,7 +186,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: 10.h,
                     ),
                     CustomTextfield(
-                        controller: confirmpasswordcontroller,
+                        controller: controller.confirmpasswordController,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Enter your password";
@@ -204,11 +201,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(
                       height: 85.h,
                     ),
-                    CustomButton(
-                      onPressed: () {
-                        if (key.currentState!.validate()) {}
-                      },
-                      texts: "Create",
+                    Obx(
+                      () => controller.isLoading.value
+                          ? Center(child: CircularProgressIndicator())
+                          : CustomButton(
+                              onPressed: () {
+                                if (key.currentState!.validate()) {
+                                  controller.register();
+                                }
+                              },
+                              texts: "Create",
+                            ),
                     ),
                     SizedBox(
                       height: 4.h,
