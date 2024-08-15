@@ -1,5 +1,4 @@
 import 'package:augment/constants/colors.dart';
-import 'package:augment/controllers/auth_controller.dart';
 import 'package:augment/controllers/user_controller.dart';
 import 'package:augment/views/edit-profile.dart';
 import 'package:augment/views/splash_screen.dart';
