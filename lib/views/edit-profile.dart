@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:augment/constants/colors.dart';
 import 'package:augment/controllers/user_controller.dart';
 import 'package:augment/widgets/custom_button.dart';
@@ -59,10 +61,17 @@ class _EditProfileState extends State<EditProfile> {
                     Container(
                       width: 88.w,
                       height: 88.h,
-                      child: CircleAvatar(
-                        backgroundImage:
-                            AssetImage("assets/images/profilecover-img.png"),
-                      ),
+                      child: Obx(() {
+                        return CircleAvatar(
+                          backgroundImage: controller.imagePath.isNotEmpty
+                              ? FileImage(File(controller.imagePath.toString()))
+                              : null,
+                          child: controller.imagePath.isEmpty
+                              ? Icon(Icons
+                                  .person) // Fallback icon when no image is provided
+                              : null,
+                        );
+                      }),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 63.h, left: 70.w),
@@ -74,9 +83,14 @@ class _EditProfileState extends State<EditProfile> {
                               border: Border.all(),
                               shape: BoxShape.circle,
                               color: blackColor),
-                          child: SvgIcon(
-                            "assets/icons/profilecamera-icon.svg",
-                            color: whiteColor,
+                          child: GestureDetector(
+                            onTap: () {
+                              controller.getimage();
+                            },
+                            child: SvgIcon(
+                              "assets/icons/profilecamera-icon.svg",
+                              color: whiteColor,
+                            ),
                           )),
                     ),
                   ],
@@ -139,7 +153,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     CustomTextfield(
                       suffixIcons: null,
-                      inputType: TextInputType.emailAddress,
+                      inputType: TextInputType.phone,
                       controller: controller.phoneNumberController,
                       hinttext: controller.user["phoneNumber"],
                     ),

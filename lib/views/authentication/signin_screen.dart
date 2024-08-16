@@ -1,5 +1,5 @@
 import 'package:augment/controllers/auth_controller.dart';
-import 'package:augment/views/authentication/change_password.dart';
+
 import 'package:augment/views/authentication/signup_screen.dart';
 import 'package:augment/constants/colors.dart';
 import 'package:augment/widgets/custom_button.dart';
@@ -132,17 +132,12 @@ class _SignInScreenState extends State<SignInScreen> {
                         SizedBox(
                           width: 155.w,
                         ),
-                        InkWell(
-                          onTap: () {
-                            Get.to(() => ChangePassword());
-                          },
-                          child: Text(
-                            "Forgot Password?",
-                            style: GoogleFonts.montserrat(
-                                fontSize: 10.sp,
-                                fontWeight: FontWeight.w500,
-                                color: textColor),
-                          ),
+                        Text(
+                          "Forgot Password?",
+                          style: GoogleFonts.montserrat(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w500,
+                              color: textColor),
                         ),
                       ],
                     ),
