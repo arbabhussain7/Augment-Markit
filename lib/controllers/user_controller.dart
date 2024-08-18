@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:augment/constants/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,6 +15,7 @@ class UserController extends GetxController {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController oldPasswordController = TextEditingController();
+
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   final ImagePicker picker = ImagePicker();
