@@ -1,6 +1,18 @@
 
 # Augment Market
 
+<p>
+<img src="https://github.com/user-attachments/assets/ed256bf4-56b1-4d18-934f-1e9cc16a8c3e" alt="Image 1" style="margin-right: 20px; margin-bottom: 10px;" width="30%">
+<img src="https://github.com/user-attachments/assets/dad32a33-61b0-4639-8ff4-6b77f82afed1" alt="Image 1" style="margin-right: 20px; margin-bottom: 10px;" width="30%">
+  <img src="https://github.com/user-attachments/assets/1865b0d6-7870-4a07-bb28-ca0b39b5e443" alt="Image 1" style="margin-right: 10px; margin-bottom: 10px;" width="30%">
+  </p>
+
+
+
+
+
+  
+
 Augment Market is an eCommerce application designed for shopping clothes. Built using Flutter, this app provides a seamless shopping experience with modern UI and efficient state management. The project integrates Firebase for managing data with CRUD operations in Firestore and uses GetX for state management.
 
 ## Features
